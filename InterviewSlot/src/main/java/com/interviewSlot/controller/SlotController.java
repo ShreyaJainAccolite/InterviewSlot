@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.interviewSlot.entities.slots;
+import com.interviewSlot.entities.Slot;
 import com.interviewSlot.serivces.SlotServices;
 
 @RestController
@@ -24,9 +27,10 @@ public class SlotController {
 	@Autowired
 	private SlotServices slotService;
 
-	@GetMapping("/")
-	public List<slots> allSlots1(){
-		return this.slotService.allSlots1();
+	// get all slots
+	@GetMapping("/slots")
+	public List<Slot> allSlots1(){
+		return this.slotService.getAllSlots();
 	}
 	
 //	@GetMapping("/date/{date}")
@@ -36,14 +40,33 @@ public class SlotController {
 //		return this.slotService.dateWiseSlots(date);
 //	}
 	
+	// get all slots on the particular date
 	@GetMapping("/date/{date}")
-	public List<slots> dateWiseSlots (@PathVariable("date") String date){
-		return this.slotService.dateWiseSlots(date);
-		
+	public List<Slot> dateWiseSlots (@PathVariable("date") String date){
+		List<Slot> slotsList = this.slotService.dateWiseSlots(date);
+		return slotsList;
 	}
 	
-	@PutMapping("/satus")
-	public slots updateStatus (@RequestBody slots slot) {
+	// update slot status
+	@PutMapping("/status")
+	public Slot updateStatus (@RequestBody Slot slot) {
 		return this.slotService.updateStatus(slot);
+	}
+	
+	// add new slot
+	@PostMapping("/slots")
+	public Slot addNewSlot(@RequestBody Slot slot) {
+		return this.slotService.addNewSlot(slot);
+	}
+	
+	//delete slot
+	@DeleteMapping("/slots/{slotId}") 
+	public ResponseEntity<HttpStatus> deleteCourse(@PathVariable int slotId) {
+		try {
+			this.slotService.deleteSlot(slotId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch(Exception E) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

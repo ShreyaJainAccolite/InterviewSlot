@@ -1,6 +1,7 @@
 package com.interviewSlot.serivces;
 
 import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,26 +12,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.interviewSlot.dao.slotsRepo;
-import com.interviewSlot.entities.slots;
+import com.interviewSlot.entities.Slot;
 
 @Service
-public class getSlotSvc implements SlotServices {
-	
+public class SlotServiceImpl implements SlotServices {
+
 	@Autowired
 	private slotsRepo slotDao;
-    
+
 	@Override
-	public List<slots> allSlots1() {
+	public List<Slot> getAllSlots() {
 		// TODO Auto-generated method stub
-		return (List<slots>) slotDao.findAll();
+		return (List<Slot>) slotDao.findAll();
 	}
 
 	@Override
-	public List<slots> dateWiseSlots(String date) {
+	public List<Slot> dateWiseSlots(String date) {
 		// TODO Auto-generated method stub
-		//date = date.replace("-", "/");
-		List<slots>slotsBydate = new ArrayList<slots>();
-		List<slots>allSlot = new ArrayList<slots>();
+		// date = date.replace("-", "/");
+		List<Slot> slotsBydate = new ArrayList<Slot>();
+		List<Slot> allSlot = new ArrayList<Slot>();
 //		allSlot=(List<slots>) slotDao.findAll();
 //		for(slots slot : allSlot) {
 //			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -46,30 +47,41 @@ public class getSlotSvc implements SlotServices {
 //				slotsBydate.add(slot);
 //			}
 //		}
-		
-		allSlot=(List<slots>) slotDao.findAll();
-		for(slots slot : allSlot) {
-			if(slot.getDate()==date) {
+
+		allSlot = (List<Slot>) slotDao.findAll();
+		for (Slot slot : allSlot) {
+			if (slot.getDate().equals(date)) {
 				slotsBydate.add(slot);
 			}
 		}
-		
 		return slotsBydate;
 	}
 
 	@Override
-	public slots updateStatus(slots slot) {
+	public Slot updateStatus(Slot slot) {
 		// TODO Auto-generated method stub
-		List<slots>l = new ArrayList<slots>();
-		l=(List<slots>) slotDao.findAll();
-		for(slots s : l) {
-			if(s.getemailId() == slot.getemailId()) {
-				s.setStatus(slot.getStatus());
-			}
-		}
-		
+//		List<Slot> listofSlots = new ArrayList<Slot>();
+//		listofSlots = (List<Slot>) slotDao.findAll();
+//		for (Slot s : listofSlots) {
+//			if (s.getSlotId() == slot.getSlotId()) {
+//				s.setStatus(slot.getStatus());
+//			}
+//		}
+		slotDao.save(slot);
+
 		return slot;
 	}
 
+	@Override
+	public Slot addNewSlot(Slot slot) {
+		slotDao.save(slot);
+		return slot;
+	}
+
+	@Override
+	public void deleteSlot(int slotId) {
+		Slot entity = slotDao.getOne(slotId);
+		slotDao.delete(entity);
+	}
 
 }

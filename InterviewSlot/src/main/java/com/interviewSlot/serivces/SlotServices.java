@@ -1,15 +1,21 @@
 package com.interviewSlot.serivces;
 
 import java.util.Date;
+
 import java.util.List;
 
-import com.interviewSlot.entities.slots;
+import com.interviewSlot.entities.Slot;
 
 public interface SlotServices {
 	// return all slots
-	public List<slots> allSlots1();
+	public List<Slot> getAllSlots();
 	//return slots according to date
-	public List<slots> dateWiseSlots(String date);
+	public List<Slot> dateWiseSlots(String date);
     //Updates status of slot
-	public slots updateStatus(slots slot);
+	public Slot updateStatus(Slot slot);
+	//Add new slot
+	public Slot addNewSlot(Slot slot);
+	//Delete a slot
+	public void deleteSlot(int slotId);
 }
+

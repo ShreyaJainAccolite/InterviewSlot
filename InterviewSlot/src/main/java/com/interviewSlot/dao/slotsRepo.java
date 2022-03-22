@@ -1,9 +1,9 @@
 package com.interviewSlot.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.interviewSlot.entities.slots;
+import com.interviewSlot.entities.Slot;
 
-public interface slotsRepo extends CrudRepository<slots, Integer> {
+public interface slotsRepo extends JpaRepository<Slot, Integer> {
 
 }

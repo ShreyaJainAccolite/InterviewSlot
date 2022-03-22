@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import com.interviewSlot.dao.slotsRepo;
-import com.interviewSlot.entities.slots;
+import com.interviewSlot.entities.Slot;
 
 import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 
@@ -15,8 +15,10 @@ import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 public class InterviewSlotApplication {
 
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(InterviewSlotApplication.class, args);
-	    slotsRepo slotRepo = context.getBean(slotsRepo.class);
+//		ApplicationContext context = SpringApplication.run(InterviewSlotApplication.class, args);
+//	    slotsRepo slotRepo = context.getBean(slotsRepo.class);
+		
+		SpringApplication.run(InterviewSlotApplication.class, args);
 	    
 	    //slots slot1 = new slots(101, "Spring Boot");
 	    //slots newSlot = slotRepo.save(slot1);
